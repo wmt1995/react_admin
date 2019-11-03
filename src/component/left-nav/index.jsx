@@ -1,6 +1,6 @@
 import React ,{Component} from 'react'
 import {Link, withRouter} from 'react-router-dom'
-import { Menu, Icon, Button } from 'antd';
+import { Menu, Icon} from 'antd';
 
 import './index.less'
 import logo from '../../assets/images/logo.png'
@@ -42,6 +42,8 @@ class  LeftNav extends Component {
 	/*根据menu生成对应的标签数组
 	* 使用reduce()+递归调用*/
 	getMenuNodes = (menuList) => {
+		const path = this.props.location.pathname
+
 		return menuList.reduce((pre,item) => {
 			if(!item.children){
 				pre.push((
@@ -53,7 +55,12 @@ class  LeftNav extends Component {
 					</Menu.Item>
 				))
 			}else {
+				//查找与当前路径匹配的子item
 				const cItem = item.children.find(cItem => cItem.key===path)
+				if (cItem){
+					this.openKey=item.key
+				}
+
 				pre.push((
 					<SubMenu
 						key={item.key}
@@ -70,10 +77,14 @@ class  LeftNav extends Component {
 			return pre
 		},[])
 	}
-
+	componentWillMount () {
+		this.menuNodes = this.getMenuNodes(menuList)
+	}
 	render () {
+		// const path = '/user'
 		const path = this.props.location.pathname
 
+		const openKey = this.openKey
 		return (
 				<div  className="left-nav">
 					<Link to='/' className="left-nav-header">
@@ -82,11 +93,13 @@ class  LeftNav extends Component {
 					</Link>
 					<Menu
 						selectedKeys={[path]}
-						defaultOpenKeys
+						// defaultOpenKeys
 						mode="inline"
 						theme="dark"
+						defaultOpenKeys={[openKey]}
+
 					>
-						{this.getMenuNodes(menuList)}
+						{this.menuNodes}
 
 
 					</Menu>
