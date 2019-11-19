@@ -5,7 +5,7 @@ import { Menu, Icon} from 'antd';
 import './index.less'
 import logo from '../../assets/images/logo.png'
 import menuList from '../../config/menuConfig'
-
+//默认暴露（export default）的可以随意起名字
 const { SubMenu } = Menu;
 class  LeftNav extends Component {
 
@@ -32,12 +32,13 @@ class  LeftNav extends Component {
 								<span>{item.title}</span>
 							</span>
 						}>
-						{this.getMenuNodes(item.children)}
+						{this.getMenuNodes_map(item.children)}
 					</SubMenu>
 				)
 			}
 		})
 	}
+
 
 	/*根据menu生成对应的标签数组
 	* 使用reduce()+递归调用*/
@@ -77,6 +78,10 @@ class  LeftNav extends Component {
 			return pre
 		},[])
 	}
+
+	/*在第一次render()之前执行一次
+	为第一个render()准备数据必须同步执行
+	* */
 	componentWillMount () {
 		this.menuNodes = this.getMenuNodes(menuList)
 	}
@@ -92,17 +97,16 @@ class  LeftNav extends Component {
 						<h1>后台管理</h1>
 					</Link>
 					<Menu
-						selectedKeys={[path]}
-						// defaultOpenKeys
-						mode="inline"
+						selectedKeys={[path]}    //当前选中的菜单项 key 数组,动态匹配，根据url
+						mode="inline"    //菜单类型，现在支持垂直、水平、和内嵌模式三种
 						theme="dark"
-						defaultOpenKeys={[openKey]}
-
+						defaultOpenKeys={[openKey]}  //初始选中的菜单项 key 数组,打开的列表
 					>
 						{this.menuNodes}
 
 
 					</Menu>
+
 				</div>
 		)
 	}

@@ -10,12 +10,16 @@ const BASE=''
 export const regLogin = (username,password) => ajax('/login',{username,password},'POST')
 
 //添加用户
-export const regAddUser = (user) => ajax('/manage/user/add',user,'POST')
+export const regAddUser = (user) => ajax(BASE+'/manage/user/add',user,'POST')
 
-//获取一级/二级分类的列表
+
+//获取一级/二级分类的列表，参数只能是对象，即使只有一个参数
 export const reqCategorys = (parentId) =>ajax(BASE+'/manage/category/list',{parentId})
+//添加分类
 export const reqAddCategorys = ({categoryName,parentId}) =>ajax(BASE+'/manage/category/add',{categoryName,parentId}, 'POST')
+//更新分类
 export const requPDATECategorys = (categoryName,categoryId) =>ajax(BASE+'/manage/category/update',{categoryName,categoryId}, 'POST')
+
 
 //jsonp请求的接口函数(天气)
 export const reqWeather = (city) => {

@@ -19,8 +19,10 @@ class  Header extends Component {
 		dayPictureUrl:'', //天气图片url
 		weather:'', //天气的文本
 	}
+
 	getTime = () => {
 		this.intervalId = setInterval(() =>{
+			//每隔1s更新
 			const currentTime=formateDate(Date.now())
 			this.setState({currentTime})
 		},1000)
@@ -65,6 +67,7 @@ class  Header extends Component {
     },
   });
 	}
+
 	//在第一次render后执行
 	//一般再次执行异步操作：发送ajax异步刷新/启动定时器
 	componentDidMount () {
@@ -74,8 +77,9 @@ class  Header extends Component {
 		this.getWeather()
 	}
 
+
 	//当前组件卸载之前调用
-	componentWillMount () {
+	componentWillUnmount () {
 		//清除定时器
 		clearInterval(this.intervalId)
 	}

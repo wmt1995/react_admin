@@ -2,8 +2,8 @@ import React ,{Component} from 'react'
 import memoryUtils from '../../utils/memoryUtils'
 import {Redirect, Route, Switch} from 'react-router-dom'
 import { Layout } from 'antd';
-import LeftNav from '../../component/left-nav/index'
-import Header from  '../../component/header/index'
+import LeftNav from '../../component/left-nav'
+import Header from  '../../component/header'
 
 import Home from '../home/home'
 import Product from '../product/product'
@@ -13,7 +13,8 @@ import Role from '../role/role'
 import Bar from '../charts/bar'
 import Pie from '../charts/pie'
 import Line from '../charts/line'
-const {  Footer, Sider, Content } = Layout;
+
+const { Footer, Sider, Content } = Layout;
 export default class  Admin extends Component {
 	render () {
 		const user= memoryUtils.user
@@ -38,7 +39,8 @@ export default class  Admin extends Component {
 									<Route path='/charts/bar' component={Bar}/>
 									<Route path='/charts/line' component={Line}/>
 									<Route path='/charts/pie' component={Pie}/>
-									<Redirect to='/home' />
+									<Redirect to='/home' /> {/*前面都不对*/}
+
 								</Switch>
 							</Content>
 							<Footer style={{textAlign:'center',color:'#ccc'}}>推荐使用谷歌浏览器，可以获得更佳的页面操作体验</Footer>
